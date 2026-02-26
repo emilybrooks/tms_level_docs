@@ -192,7 +192,9 @@ Lists every file in the apak file.
 
 ### .lua
 Lua scripts, which appear to be duplicates of ones found inside `pack_999_lua.cpk/Map`.
+
 mapstaticeffect.lua has definitions for which particle effects to spawn in the map.
+
 Most useful scripts are found in `pack_999_lua.cpk/Event/field/script_map`
 
 Wii U .lua files can be decompiled with this site: https://luadec.metaworm.site/ 
@@ -202,10 +204,12 @@ Wii U .lua files can be decompiled with this site: https://luadec.metaworm.site/
 [binary_templates/symbolencountlayouttable.bt](https://github.com/emilybrooks/tms_level_docs/blob/main/binary_templates/symbolencountlayouttable.bt)
 
 Located in `pack_000_map.cpk/Map`
+
 Enemy symbols spawn from points that are defined in maplayout.layout. This table includes some data associated with each enemy spawner, and likely an index into another table for what set of enemies to use, but more research is required.
 
 ### gimmicktable.tbl
 [binary_templates/gimmicktable.bt](https://github.com/emilybrooks/tms_level_docs/blob/main/binary_templates/gimmicktable.bt)
 
 Located in `pack_000_map.cpk/Map`
+
 Purpose currently unknown.

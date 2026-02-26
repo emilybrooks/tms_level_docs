@@ -190,7 +190,7 @@ for(int i = 0; i < FMDLCount; i++)
         /* 0x54 */ uint16 BoneIndex;
         /* 0x56 */ uint16 FVTXIndex;
         /* 0x58 */ uint16 SkinBoneIndexCount <comment="Total number of bones referenced across all vertices">;
-        /* 0x5A */ uint8 VertexWeightCounts <comment="How many bones each vertex is influenced by">; 
+        /* 0x5A */ uint8 VertexWeightCount <comment="How many bones each vertex is influenced by">; 
         /* 0x5B */ uint8 MeshCount;
         /* 0x5C */ uint8 Unk5C;
         /* 0x5D */ uint8 Unk5D;
