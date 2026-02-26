@@ -1,0 +1,69 @@
+//------------------------------------------------
+//--- 010 Editor v16.0.3 Binary Template
+//
+//      File: maplayout.layout
+//   Authors: emilybrooks
+//   Purpose: Positions of objects etc for levels in Tokyo Mirage Sessions ♯FE
+//------------------------------------------------
+
+#include "include/alternate_color.h"
+
+local uint8 endian_test = ReadUByte(0x4);
+if(endian_test == 9)
+{
+    LittleEndian();
+}
+else
+{
+    BigEndian();
+}
+
+/* 0x00 */ char Magic[4];
+/* 0x04 */ uint32 Unk04;
+/* 0x08 */ uint32 NumberOfEntries;
+/* 0x0C */ uint32 Unk0C;
+
+struct
+{
+    SetBackColor(AlternateColor());
+    /* 0x00 */ uint32 group_id <name = "Group ID">;
+    /* 0x04 */ uint32 unk04;
+    /* 0x08 */ uint32 id <name = "ID">;
+    /* 0x0C */ float position_x <name = "Position X">;
+    /* 0x10 */ float position_y <name = "Position Y">;
+    /* 0x14 */ float position_z <name = "Position Z">;
+    /* 0x18 */ float half_extent_x <name = "Half Width X">;
+    /* 0x1C */ float half_extent_y <name = "Half Width Y">;
+    /* 0x20 */ float half_extent_z <name = "Half Width Z">;
+    /* 0x24 */ float pitch <name = "Pitch">;
+    /* 0x28 */ float yaw <name = "Yaw">;
+    /* 0x2C */ float roll <name = "Roll">;
+    /* 0x30 */ uint32 unk30;
+    /* 0x34 */ uint32 unk34;
+    /* 0x38 */ uint32 unk38;
+    /* 0x3C */ uint32 unk3C;
+    /* 0x40 */ uint32 unk40;
+    /* 0x44 */ uint32 unk44;
+    /* 0x48 */ uint32 unk48;
+    /* 0x4C */ uint32 unk4C;
+    /* 0x50 */ uint32 unk50;
+    /* 0x54 */ uint32 unk54;
+    /* 0x58 */ uint32 unk58;
+    /* 0x5C */ uint32 unk5C;
+    /* 0x60 */ uint32 string01 <read = ReadString(this)>;
+    /* 0x64 */ uint32 string02 <read = ReadString(this)>;
+    /* 0x68 */ uint32 string03 <read = ReadString(this)>;
+    /* 0x6C */ uint32 unk6C;
+    /* 0x70 */ uint32 unk70;
+    /* 0x74 */ uint32 unk90;
+    /* 0x78 */ uint32 unk94;
+    /* 0x7C */ uint32 unk98;
+    /* 0x80 */ uint32 unk9C;
+    /* 0x84 */ uint32 unkA0;
+    /* 0x88 */ uint32 string04 <read = ReadString(this)>;
+    /* 0x8C */ uint32 string05 <read = ReadString(this)>;
+    /* 0x90 */ uint32 string06 <read = ReadString(this)>;
+    /* 0x94 */ uint32 string07 <read = ReadString(this)>;
+    /* 0x98 */ uint32 string08 <read = ReadString(this)>;
+    /* 0x9C */ uint32 string09 <read = ReadString(this)>;
+} entry[NumberOfEntries]<optimize = false>; // size = 0xA0

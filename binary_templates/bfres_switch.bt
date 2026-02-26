@@ -1,0 +1,359 @@
+//------------------------------------------------
+//--- 010 Editor v16.0.3 Binary Template
+//
+//      File: .bfres
+//   Authors: emilybrooks
+//   Purpose: BFRES (Binary caFe RESources), 3D graphics related data in Tokyo Mirage Sessions ♯FE
+//------------------------------------------------
+
+#include "include/alternate_color.h"
+
+local uint8 endian_test = ReadUByte(0xC);
+if(endian_test == 0xFF)
+{
+    LittleEndian();
+}
+else
+{
+    BigEndian();
+}
+
+/* 0x00 */ char Magic[4];
+/* 0x04 */ uint32 Unk04 <format=hex>;
+/* 0x08 */ uint8 VersionMicro;
+/* 0x09 */ uint8 VersionMinor;
+/* 0x0A */ uint16 VersionMajor;
+/* 0x0C */ uint16 ByteOrderMark <format=hex>;
+/* 0x0E */ uint16 Unk0E;
+/* 0x10 */ uint32 Name <read=ReadString(this)>;
+/* 0x14 */ uint16 Unk14;
+/* 0x16 */ uint16 Unk16 <format=hex>;
+/* 0x18 */ uint32 RelocationTableOffset <format=hex>;
+/* 0x1C */ uint32 FileSize <format=hex>;
+/* 0x20 */ uint64 Name2 <read=ReadString(this + 2)>;
+/* 0x28 */ uint64 FMDLArrayOffset <format=hex>;
+/* 0x30 */ uint64 FMDLResDicOffset <format=hex>;
+/* 0x38 */ uint64 Unk38 <format=hex>;
+/* 0x40 */ uint64 Unk40 <format=hex>;
+/* 0x48 */ uint64 Unk48 <format=hex>;
+/* 0x50 */ uint64 Unk50 <format=hex>;
+/* 0x58 */ uint64 FSKAArrayOffset <format=hex>;
+/* 0x60 */ uint64 FSKAResDicOffset <format=hex>;
+/* 0x68 */ uint64 FMAAArrayOffset <format=hex>;
+/* 0x70 */ uint64 FMAAResDicOffset <format=hex>;
+/* 0x78 */ uint64 Unk78 <format=hex>;
+/* 0x80 */ uint64 Unk80 <format=hex>;
+/* 0x88 */ uint64 Unk88 <format=hex>;
+/* 0x90 */ uint64 Unk90 <format=hex>;
+/* 0x98 */ uint64 Unk98 <format=hex>;
+/* 0xA0 */ uint64 UnkA0 <format=hex>;
+/* 0xA8 */ uint64 UnkA8 <format=hex>;
+/* 0xB0 */ uint64 MemoryPoolInfoOffset <format=hex>;
+/* 0xB8 */ uint64 EmbeddedFileArrayOffset <format=hex>;
+/* 0xC0 */ uint64 EmbeddedFileResDicOffset <format=hex>;
+/* 0xC8 */ uint64 UnkC8 <format=hex>;
+/* 0xD0 */ uint64 StringTableOffset <format=hex>;
+/* 0xD8 */ uint32 StringTableLength <format=hex>;
+/* 0xDC */ uint16 FMDLCount;
+/* 0xDE */ uint16 UnkDE;
+/* 0xE0 */ uint16 UnkE0;
+/* 0xE2 */ uint16 FSKACount;
+/* 0xE4 */ uint16 FMAACount;
+/* 0xE6 */ uint16 UnkE6;
+/* 0xE8 */ uint16 UnkE8;
+/* 0xEA */ uint16 UnkEA;
+/* 0xEC */ uint16 EmbeddedFileCount;
+/* 0xEE */ uint16 UnkEE;
+
+if (MemoryPoolInfoOffset != 0)
+{
+    FSeek(MemoryPoolInfoOffset);
+    struct
+    {
+        /* 0x00 */ uint32 Flags <format=binary>;
+        /* 0x04 */ uint32 Size <format=hex>;
+        /* 0x08 */ uint32 GPURegionOffset <format=hex>;
+    } MemoryPoolInfo; // size = 0x10
+}
+
+for(int i = 0; i < FMDLCount; i++)
+{
+    SetBackColor(AlternateColor());
+
+    FSeek(FMDLArrayOffset + (i * 0x78));
+    struct
+    {
+        /* 0x00 */ char Magic[4];
+        /* 0x00 */ uint32 Flags <format=binary>;
+        /* 0x08 */ uint64 Name <read=ReadString(this + 2)>;
+        /* 0x10 */ uint64 FilePath <read=ReadString(this + 2)>;
+        /* 0x18 */ uint64 FSKLOffset <format=hex>;
+        /* 0x20 */ uint64 FVTXArrayOffset <format=hex>;
+        /* 0x28 */ uint64 FSHPArrayOffset <format=hex>;
+        /* 0x30 */ uint64 FSHPResDicOffset <format=hex>;
+        /* 0x38 */ uint64 FMATArrayOffset <format=hex>;
+        /* 0x40 */ uint64 Unk40 <format=hex>;
+        /* 0x48 */ uint64 FMATResDicOffset <format=hex>;
+        /* 0x50 */ uint64 UserDataArrayOffset <format=hex>;
+        /* 0x58 */ uint64 UserDataResDicOffset <format=hex>;
+        /* 0x60 */ uint64 Unk60 <format=hex>;
+        /* 0x68 */ uint16 FVTXCount;
+        /* 0x6A */ uint16 FSHPCount;
+        /* 0x6C */ uint16 FMATCount;
+        /* 0x6E */ uint16 Unk6E;
+        /* 0x70 */ uint16 UserDataCount;
+        /* 0x72 */ uint16 Unk72;
+        /* 0x74 */ uint32 Unk74;
+    } FMDL <optimize = false>; // size = 0x78
+
+    FSeek(FMDL.FSKLOffset);
+    struct
+    {
+        /* 0x00 */ char Magic[4];
+        /* 0x04 */ uint32 Flags <format=binary>;      
+        /* 0x08 */ uint64 BoneResDicOffset <format=hex>;
+        /* 0x10 */ uint64 BoneArrayOffset <format=hex>;
+        /* 0x18 */ uint64 SmoothRigidIndexArrayOffset <format=hex>;
+        /* 0x20 */ uint64 BoneLocalFromBindPoseMatrixArrayOffset <format=hex>;
+        /* 0x28 */ uint64 Unk28 <format=hex>;
+        /* 0x30 */ uint64 Unk30 <format=hex>;
+        /* 0x38 */ uint16 BoneCount;
+        /* 0x3A */ uint16 SmoothMatrixCount;
+        /* 0x3C */ uint16 RigidMatrixCount;
+        /* 0x3E */ uint16 Unk3E;
+    } FSKL; // size = 0x40
+
+    FSeek(FSKL.BoneArrayOffset);
+    struct
+    {
+        /* 0x00 */ uint64 Name <read=ReadString(this + 2)>;
+        /* 0x08 */ uint64 UserDataArrayOffset <format=hex>;
+        /* 0x10 */ uint64 UserDataResDicOffset <format=hex>;
+        /* 0x18 */ uint64 Unk18 <format=hex>;
+        /* 0x20 */ uint64 Unk20 <format=hex>;
+        /* 0x28 */ int16 BoneIndex;
+        /* 0x2A */ int16 ParentBoneIndex;
+        /* 0x2C */ int16 SmoothMatrixIndex;
+        /* 0x2E */ int16 RigidMatrixIndex;
+        /* 0x30 */ int16 BillboardIndex;
+        /* 0x32 */ uint16 UserDataCount;
+        /* 0x34 */ uint32 Flags <format=binary>;
+        /* 0x38 */ float ScaleX;
+        /* 0x3C */ float ScaleY;
+        /* 0x40 */ float ScaleZ;
+        /* 0x44 */ float RotationX;
+        /* 0x48 */ float RotationY;
+        /* 0x4C */ float RotationZ;
+        /* 0x50 */ float RotationW;
+        /* 0x54 */ float TranslationX;
+        /* 0x58 */ float TranslationY;
+        /* 0x5C */ float TranslationZ;
+    } Bone[FSKL.BoneCount] <optimize = false>; // size = 0x60
+
+    FSeek(FMDL.FVTXArrayOffset);
+    struct
+    {
+        /* 0x00 */ char Magic[4];
+        /* 0x04 */ uint32 Flags <format=binary>;
+        /* 0x08 */ uint64 AttributeArrayOffset <format=hex>;
+        /* 0x10 */ uint64 AttributeResDicOffset <format=hex>;
+        /* 0x18 */ uint64 Unk18 <format=hex>;
+        /* 0x20 */ uint64 Unk20 <format=hex>;
+        /* 0x28 */ uint64 Unk28 <format=hex>;
+        /* 0x30 */ uint64 BufferInfoArrayOffset <format=hex>;
+        /* 0x38 */ uint64 BufferStrideArrayOffset <format=hex>;
+        /* 0x40 */ uint64 Unk40 <format=hex>;
+        /* 0x48 */ uint32 BufferOffset <format=hex, comment="Relative to the GPU Region start.">;
+        /* 0x4C */ uint8 AttributeCount;
+        /* 0x4D */ uint8 BufferCount;
+        /* 0x4E */ uint16 FVTXIndex;
+        /* 0x50 */ uint32 NumberOfVertices;
+        /* 0x54 */ uint32 Unk54;
+    } FVTX[FMDL.FVTXCount] <optimize = false>; // size = 0x58
+
+    FSeek(FMDL.FSHPArrayOffset);
+    struct
+    {
+        /* 0x00 */ char Magic[4];
+        /* 0x04 */ uint32 Flags <format=binary>;
+        /* 0x08 */ uint64 Name <read=ReadString(this + 2)>;
+        /* 0x10 */ uint64 FVTXOffset <format=hex>;
+        /* 0x18 */ uint64 LODMeshArrayOffset <format=hex>;
+        /* 0x20 */ uint64 SkinBoneIndexArrayOffset <format=hex>;
+        /* 0x28 */ uint64 Unk28 <format=hex>;
+        /* 0x30 */ uint64 Unk30 <format=hex>;
+        /* 0x38 */ uint64 BoundingBoxArrayOffset <format=hex>;
+        /* 0x40 */ uint64 BoundingSphereArrayOffset <format=hex>;
+        /* 0x48 */ uint64 Unk48 <format=hex>;
+        /* 0x50 */ uint16 FSHPIndex;
+        /* 0x52 */ uint16 FMATIndex;
+        /* 0x54 */ uint16 BoneIndex;
+        /* 0x56 */ uint16 FVTXIndex;
+        /* 0x58 */ uint16 SkinBoneIndexCount <comment="Total number of bones referenced across all vertices">;
+        /* 0x5A */ uint8 VertexWeightCounts <comment="How many bones each vertex is influenced by">; 
+        /* 0x5B */ uint8 MeshCount;
+        /* 0x5C */ uint8 Unk5C;
+        /* 0x5D */ uint8 Unk5D;
+        /* 0x5E */ uint16 Unk5E;
+    } FSHP[FMDL.FSHPCount] <optimize = false>; // size = 0x60
+
+    FSeek(FMDL.FMATArrayOffset);
+    struct
+    {
+        /* 0x00 */ char Magic[4];
+        /* 0x04 */ uint32 Flags <format=binary>;
+        /* 0x08 */ uint64 Name <read=ReadString(this + 2)>;
+        /* 0x10 */ uint64 Unk10 <format=hex>;
+        /* 0x18 */ uint64 Unk18 <format=hex>;
+        /* 0x20 */ uint64 ShaderAssignOffset <format=hex>;
+        /* 0x28 */ uint64 TextureArrayOffset <format=hex>;
+        /* 0x30 */ uint64 TextureNameArrayOffset <format=hex>;
+        /* 0x38 */ uint64 RuntimeSamplerArrayOffset <format=hex>;
+        /* 0x40 */ uint64 SamplerInfoArrayOffset <format=hex>;
+        /* 0x48 */ uint64 SamplerNameArrayOffset <format=hex>;
+        /* 0x50 */ uint64 Unk50 <format=hex>;
+        /* 0x58 */ uint64 Unk58 <format=hex>;
+        /* 0x60 */ uint64 Unk60 <format=hex>;
+        /* 0x68 */ uint64 UserDataArrayOffset <format=hex>;
+        /* 0x70 */ uint64 UserDataResDicOffset <format=hex>;
+        /* 0x78 */ uint64 Unk78 <format=hex>;
+        /* 0x80 */ uint64 Unk80 <format=hex>;
+        /* 0x88 */ uint64 Unk88 <format=hex>;
+        /* 0x90 */ uint64 Unk90 <format=hex>;
+        /* 0x98 */ uint16 FMATIndex;
+        /* 0x9A */ uint16 Unk9A;
+        /* 0x9C */ uint8 SamplerCount;
+        /* 0x9D */ uint8 TextureCount;
+        /* 0x9E */ uint16 Unk9E;
+        /* 0xA0 */ uint16 UnkA0;
+        /* 0xA2 */ uint16 UnkA2;
+        /* 0xA4 */ uint16 UnkA4;
+        /* 0xA6 */ uint16 UserDataCount;
+    } FMAT[FMDL.FMATCount] <optimize = false>; // size = 0xA8
+}
+
+typedef struct
+{
+    /* 0x00 */ uint64 FrameArrayOffset <format=hex>;
+    /* 0x08 */ uint64 KeyArrayOffset <format=hex>;
+    /* 0x10 */ uint16 Flags <format=binary>;
+    /* 0x12 */ uint16 KeyframeCount;
+    /* 0x14 */ uint32 AnimationDataOffset <format=hex>;
+    /* 0x18 */ float StartFrame;
+    /* 0x1C */ float EndFrame;
+    /* 0x20 */ float DataScale;
+    /* 0x24 */ float DataOffset;
+    /* 0x28 */ float Delta;
+    /* 0x2C */ uint32 Unk2C;
+} Curve <optimize = false>; // size = 30
+
+for(int i = 0; i < FSKACount; i++)
+{
+    SetBackColor(AlternateColor());
+
+    FSeek(FSKAArrayOffset + (i * 0x50));
+    struct
+    {
+        /* 0x00 */ char Magic[4];
+        /* 0x04 */ uint32 Flags <format=binary>;
+        /* 0x08 */ uint64 Name <read=ReadString(this + 2)>;
+        /* 0x10 */ uint64 FilePath <read=ReadString(this + 2)>;
+        /* 0x18 */ uint64 Unk18 <format=hex>;
+        /* 0x20 */ uint64 BindIndexArrayOffset <format=hex>;
+        /* 0x28 */ uint64 BoneAnimationArrayOffset <format=hex>;
+        /* 0x30 */ uint64 Unk30 <format=hex>;
+        /* 0x38 */ uint64 Unk38 <format=hex>;
+        /* 0x40 */ uint32 FrameCount;
+        /* 0x44 */ uint32 CurveCount;
+        /* 0x48 */ uint32 BakedSize;
+        /* 0x4C */ uint16 BoneAnimationCount;
+        /* 0x4E */ uint16 Unk4E;
+    } FSKA <optimize = false>; // size = 0x50?
+
+    for (int j = 0; j < FSKA.BoneAnimationCount; j++)
+    {
+        FSeek(FSKA.BoneAnimationArrayOffset + (j * 0x38));
+        struct
+        {
+            /* 0x00 */ uint64 Name <read=ReadString(this + 2)>;
+            /* 0x08 */ uint64 CurveArrayOffset <format=hex>;
+            /* 0x10 */ uint64 InitialValueArrayOffset <format=hex>;
+            /* 0x18 */ uint64 Unk18 <format=hex>;
+            /* 0x20 */ uint64 Unk20 <format=hex>;
+            /* 0x28 */ uint32 Flags <format=binary>;
+            /* 0x2C */ uint8 Unk2C;
+            /* 0x2D */ uint8 Unk2D;
+            /* 0x2E */ uint8 CurveCount;
+            /* 0x2F */ uint8 Unk2F;
+            /* 0x30 */ uint32 StartCurveIndex;
+            /* 0x34 */ uint32 Unk34;
+        } BoneAnimation <optimize = false>; // size = 0x38
+
+        for (int k = 0; k < BoneAnimation.CurveCount; k++)
+        {
+            FSeek(BoneAnimation.CurveArrayOffset + (k * 0x30));
+            Curve BoneAnimationCurve;
+        }
+    }
+}
+
+for(int i = 0; i < FMAACount; i++)
+{
+    SetBackColor(AlternateColor());
+
+    FSeek(FMAAArrayOffset + (i * 0x70));
+    struct
+    {
+        /* 0x00 */ char Magic[4];
+        /* 0x04 */ uint32 Flags <format=binary>;
+        /* 0x08 */ uint64 Name <read=ReadString(this + 2)>;
+        /* 0x10 */ uint64 FilePath <read=ReadString(this + 2)>;
+        /* 0x18 */ uint64 Unk18 <format=hex>;
+        /* 0x20 */ uint64 Unk20 <format=hex>;
+        /* 0x28 */ uint64 MaterialAnimationArrayOffset <format=hex>;
+        /* 0x30 */ uint64 Unk30 <format=hex>;
+        /* 0x38 */ uint64 Unk38 <format=hex>;
+        /* 0x40 */ uint64 UserDataArrayOffset <format=hex>;
+        /* 0x48 */ uint64 UserDataResDicOffset <format=hex>;
+        /* 0x50 */ uint64 Unk50 <format=hex>;
+        /* 0x58 */ uint32 FrameCount;
+        /* 0x5C */ uint32 BakedSize;
+        /* 0x60 */ uint16 UserDataCount;
+        /* 0x62 */ uint16 MaterialAnimationCount;
+        /* 0x64 */ uint16 CurveCount;
+        /* 0x66 */ uint16 ShaderParamAnimCount;
+        /* 0x68 */ uint16 Unk68;
+        /* 0x6A */ uint16 Unk6A;
+        /* 0x6C */ uint16 Unk6C;
+    } FMAA <optimize = false>; // size = 0x70
+
+    for (int j = 0; j < FMAA.MaterialAnimationCount; j++)
+    {
+        FSeek(FMAA.MaterialAnimationArrayOffset + (j * 0x40));
+        struct
+        {
+            /* 0x00 */ uint64 Name <read=ReadString(this + 2)>;
+            /* 0x08 */ uint64 ShaderParamAnimationArrayOffset <format=hex>;
+            /* 0x10 */ uint64 Unk10 <format=hex>;
+            /* 0x18 */ uint64 CurveArrayOffset <format=hex>;
+            /* 0x20 */ uint64 ConstantArrayOffset <format=hex>;
+            /* 0x28 */ int16 ShaderParamCurveIndex;
+            /* 0x2A */ int16 Unk2A;
+            /* 0x2C */ int16 Unk2C;
+            /* 0x2E */ int16 Unk2E;
+            /* 0x30 */ int16 Unk30;
+            /* 0x32 */ uint16 ShaderParamAnimationCount;
+            /* 0x34 */ uint16 Unk34;
+            /* 0x36 */ uint16 ConstantCount;
+            /* 0x38 */ uint16 CurveCount;
+            /* 0x3A */ uint16 unk3A;
+            /* 0x3C */ uint32 unk3C;
+        } MaterialAnimation <optimize = false>; // size = 0x40
+
+        for (int k = 0; k < MaterialAnimation.CurveCount; k++)
+        {
+            FSeek(MaterialAnimation.CurveArrayOffset + (k * 0x30));
+            Curve MaterialAnimationCurve;
+        }
+    }
+}

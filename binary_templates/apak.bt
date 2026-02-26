@@ -1,0 +1,40 @@
+//------------------------------------------------
+//--- 010 Editor v16.0.3 Binary Template
+//
+//      File: .apak
+//   Authors: emilybrooks
+//   Purpose: Atlas PAK, bundles multiple files together in Tokyo Mirage Sessions ♯FE
+//------------------------------------------------
+
+#include "include/alternate_color.h"
+
+local uint8 endian_test = ReadUByte(0x4);
+if(endian_test == 0x0)
+{
+    BigEndian();
+}
+else
+{
+    LittleEndian();
+}
+
+/* 0x00 */ char Magic[4];
+/* 0x04 */ uint32 Unk04;
+/* 0x08 */ uint32 FileInfoCount;
+/* 0x0C */ uint32 Unk0C;
+/* 0x10 */ uint32 FileInfoSize <format=hex>;
+/* 0x14 */ uint32 Size <format=hex>;
+
+struct
+{
+    SetBackColor(AlternateColor());
+    /* 0x00 */ uint32 Hash;
+    /* 0x04 */ uint32 FileOffset <format=hex>;
+    /* 0x08 */ uint32 FileSize <format=hex>;
+    /* 0x0C */ uint32 FileSizeAligned <format=hex>;
+    /* 0x10 */ uint32 Alignment <format=hex>;
+    /* 0x14 */ uint32 Unk14;
+    /* 0x18 */ uint32 Unk18;
+    /* 0x1C */ uint32 Unk1C;
+    /* 0x20 */ char FileName[32];
+} FileInfo[FileInfoCount]<optimize = false>; // size = 0x40

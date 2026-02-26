@@ -1,0 +1,131 @@
+//------------------------------------------------
+//--- 010 Editor v16.0.3 Binary Template
+//
+//      File: .lig
+//   Authors: emilybrooks
+//   Purpose: Light definitions in Tokyo Mirage Sessions ♯FE
+//------------------------------------------------
+
+#include "include/alternate_color.h"
+
+local uint8 endian_test = ReadUByte(0x20);
+void SetEndianness()
+{
+    if(endian_test == 0)
+    {
+        BigEndian();
+    }
+    else
+    {
+        LittleEndian();
+    }
+}
+
+SetEndianness();
+
+/* 0x00 */ char Magic[4];
+/* 0x04 */ uint32 Size;
+/* 0x08 */ uint32 Unk08;
+/* 0x0C */ uint32 Unk0C;
+/* 0x10 */ uint32 Unk10;
+/* 0x14 */ uint32 Unk14;
+/* 0x18 */ uint32 Unk18;
+/* 0x1C */ uint32 Unk1C;
+/* 0x20 */ uint32 LDATStart;
+/* 0x24 */ uint32 LTYPStart;
+/* 0x28 */ uint32 LNAMStart;
+/* 0x2C */ uint32 LNNAStart;
+
+// for some reason the header structs are still big endian
+// with the exception of b016_01.lig, which is little endian through the entire file
+
+FSeek(LDATStart);
+struct
+{
+    BigEndian();
+    /* 0x00 */ char Magic[4];
+    /* 0x04 */ uint32 Unk04;
+    /* 0x08 */ uint32 Count;
+    /* 0x0C */ uint32 Unk0C;
+} LDATHeader; // size = 0x10
+
+struct
+{
+    SetEndianness();
+    SetBackColor(AlternateColor());
+    /* 0x00 */ float PositionX;
+    /* 0x04 */ float PositionY;
+    /* 0x08 */ float PositionZ;
+    /* 0x0C */ float Unk0C;
+    /* 0x10 */ float Unk10;
+    /* 0x14 */ float Unk14;
+    /* 0x18 */ float Unk18;
+    /* 0x1C */ float Unk1C;
+    /* 0x20 */ float ColorR;
+    /* 0x24 */ float ColorG;
+    /* 0x28 */ float colorB;
+    /* 0x2C */ float Unk2C;
+    /* 0x30 */ float Unk30;
+    /* 0x34 */ float Unk34;
+    /* 0x38 */ float Unk38;
+    /* 0x3C */ float Unk3C;
+    /* 0x40 */ float Unk40;
+    /* 0x44 */ float Unk44;
+    /* 0x48 */ float Unk48;
+    /* 0x4C */ float Unk4C;
+} LDATEntry[LDATHeader.Count]<optimize = false>; // size = 0x50
+
+
+FSeek(LTYPStart);
+
+struct
+{
+    BigEndian();
+    /* 0x00 */ char Magic[4];
+    /* 0x04 */ uint32 Unk04;
+    /* 0x08 */ uint32 Count;
+    /* 0x0C */ uint32 Unk0C;
+} LTYPHeader; // size = 0x10
+
+struct
+{
+    SetEndianness();
+    SetBackColor(AlternateColor());
+    /* 0x00 */ uint32 Type;
+} LTYPEntry[LTYPHeader.Count]<optimize = false>; // size = 0x4
+
+FSeek(LNAMStart);
+
+struct
+{
+    BigEndian();
+    /* 0x00 */ char Magic[4];
+    /* 0x04 */ uint32 Unk04;
+    /* 0x08 */ uint32 Count;
+    /* 0x0C */ uint32 Unk0C;
+} LNAMHeader; // size = 0x10
+
+struct
+{
+    SetEndianness();
+    SetBackColor(AlternateColor());
+    /* 0x00 */ uint32 StringOffset;
+} LNAMEntry[LNAMHeader.Count]<optimize = false>; // size = 0x4
+
+FSeek(LNNAStart);
+
+struct
+{
+    BigEndian();
+    /* 0x00 */ char Magic[4];
+    /* 0x04 */ uint32 Unk04;
+    /* 0x08 */ uint32 Count;
+    /* 0x0C */ uint32 Unk0C;
+} LNNAHeader; // size = 0x10
+
+struct
+{
+    SetEndianness();
+    SetBackColor(AlternateColor());
+    /* 0x00 */ uint32 StringOffset;
+} LNNAEntry[LNNAHeader.Count]<optimize = false>; // size = 0x4

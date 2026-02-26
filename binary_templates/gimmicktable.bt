@@ -1,0 +1,36 @@
+//------------------------------------------------
+//--- 010 Editor v16.0.3 Binary Template
+//
+//      File: gimmicktable.tbl
+//   Authors: emilybrooks
+//   Purpose: Gimmick data in Tokyo Mirage Sessions ♯FE
+//------------------------------------------------
+
+#include "include/alternate_color.h"
+
+local uint8 endian_test = ReadUByte(0x18);
+if(endian_test == 1)
+{
+    LittleEndian();
+}
+else
+{
+    BigEndian();
+}
+
+local uint32 EntrySize = 0x18;
+local uint32 Count = FileSize() / EntrySize;
+
+struct
+{
+    SetBackColor(AlternateColor());
+    /* 0x00 */ int16 Unk00;
+    /* 0x02 */ int16 DungeonIndex;
+    /* 0x04 */ int16 RoomIndex;
+    /* 0x06 */ int16 Unk06;
+    /* 0x08 */ int32 LayoutID;
+    /* 0x0C */ int16 Unk0C;
+    /* 0x0E */ int16 Pad0E;
+    /* 0x10 */ int32 Unk10;
+    /* 0x14 */ int32 Unk14;
+} Entry[Count] <optimize = false>; // size = 0x18

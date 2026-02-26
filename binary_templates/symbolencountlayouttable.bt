@@ -1,0 +1,42 @@
+//------------------------------------------------
+//--- 010 Editor v16.0.3 Binary Template
+//
+//      File: symbolencountlayouttable.bin
+//   Authors: emilybrooks
+//   Purpose: Enemy Spawner Table in Tokyo Mirage Sessions ♯FE
+//------------------------------------------------
+
+#include "include/random_color.h"
+
+local uint8 endian_test = ReadUByte(0x0);
+if(endian_test == 1)
+{
+    LittleEndian();
+}
+else
+{
+    BigEndian();
+}
+
+local uint32 entry_count = FileSize() / 0x28;
+
+struct
+{
+    SetBackColor(RandomColor());
+    /* 0x00 */ int16 unk00;
+    /* 0x02 */ int16 dungeon_index <name = "Dungeon Index">;
+    /* 0x04 */ int16 room_index <name = "Room Index">;
+    /* 0x06 */ int16 layout_id <name = "Layout ID">;
+    /* 0x08 */ int8 unk08;
+    /* 0x09 */ int8 unk09;
+    /* 0x0A */ int8 unk0A;
+    /* 0x0B */ int8 unk0B;
+    /* 0x0C */ int16 unk0C;
+    /* 0x0E */ int16 unk0E;
+    /* 0x10 */ int32 unk10;
+    /* 0x14 */ int32 unk14;
+    /* 0x18 */ int32 unk18;
+    /* 0x1C */ int32 unk1C;
+    /* 0x20 */ int32 unk20;
+    /* 0x24 */ int32 unk24;
+} entry[entry_count] <optimize = false>; // size = 0x28

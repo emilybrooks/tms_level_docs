@@ -1,0 +1,45 @@
+//------------------------------------------------
+//--- 010 Editor v16.0.3 Binary Template
+//
+//      File: .atlm
+//   Authors: emilybrooks
+//   Purpose: Lightmaps in Tokyo Mirage Sessions ♯FE
+//------------------------------------------------
+
+#include "include/alternate_color.h"
+
+local uint8 endian_test = ReadUByte(0xC);
+if(endian_test == 0x0)
+{
+    BigEndian();
+}
+else
+{
+    LittleEndian();
+}
+
+/* 0x00 */ char Magic[4];
+/* 0x04 */ uint32 Unk04;
+/* 0x08 */ uint32 Unk08;
+/* 0x0C */ uint32 LightmapArrayOffset;
+/* 0x10 */ uint32 Count;
+/* 0x14 */ uint32 BNTXOffset;
+
+FSeek(LightmapArrayOffset);
+
+struct
+{
+    SetBackColor(AlternateColor());
+    /* 0x00 */ float ScaleU;
+    /* 0x04 */ float ScaleV;
+    /* 0x08 */ float TranslateU;
+    /* 0x0C */ float TranslateV;
+    /* 0x10 */ uint32 Bone <read = ReadString(this)>;
+    /* 0x14 */ uint32 LightmapTextureIndex;
+    /* 0x18 */ float Unk18;
+    /* 0x1C */ uint32 Unk1C;
+    /* 0x20 */ uint32 Unk20;
+    /* 0x24 */ uint32 Unk24;
+    /* 0x28 */ uint32 Unk28;
+    /* 0x2C */ uint32 Unk2C;
+} UnkStruct1[Count] <optimize = false>; // size = 0x30
