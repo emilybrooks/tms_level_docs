@@ -142,7 +142,7 @@ These files contain 3d coordinates that can be used to spawn objects, npcs, defi
 6.
 7. triggers to leave an area and open the tokyo map, also portals in dungeons
 8. treasure chests
-9. once sided breakable walls
+9. one sided breakable walls
 10. ch5 breakable walls
 11.
 12. trigger areas
