@@ -13,12 +13,12 @@ These can be opened using a variety of programs, see https://amicitia.miraheze.o
 ## Level files
 
 ### .apak
-`binary_templates/apak.bt`
+[binary_templates/apak.bt](https://github.com/emilybrooks/tms_level_docs/blob/main/binary_templates/apak.bt)
 
 Short for Atlas Pack. All the files for a level are bundled together in a `model.apak` file. This format has a simple header that lists each file's name, start offset, and size. 
 
 ### .bfres
-`binary_templates/bfres_switch.bt`
+[binary_templates/bfres_switch.bt](https://github.com/emilybrooks/tms_level_docs/blob/main/binary_templates/bfres_switch.bt)
 
 Models and animations are stored in bfres files. This format was developed by Nintendo and is used in a variety of Wii U and Switch games. There are many different versions.
 
@@ -119,17 +119,17 @@ note: these all apply to different versions of the file format
 - https://github.com/KillzXGaming/Switch-Toolbox
 
 ### .atlm
-`binary_templates/atlm.bt`
+[binary_templates/atlm.bt](https://github.com/emilybrooks/tms_level_docs/blob/main/binary_templates/atlm.bt)
 
 Short for Atlus Lightmap. Stores lightmap textures for a model. They have some data which specifies how to transform the uv coords for each bone of the model. These transformations use bottom left as 0, but the vertex buffers inside model files use top left as 0. There is a bntx file that contains the actual lightmap texture.
 
 ### .lig
-`binary_templates/lig.bt`
+[binary_templates/lig.bt](https://github.com/emilybrooks/tms_level_docs/blob/main/binary_templates/lig.bt)
 
 Has point light and directional light definitions.
 
 ### maplayout.layout
-`binary_templates/maplayout.bt`
+[binary_templates/maplayout.bt](https://github.com/emilybrooks/tms_level_docs/blob/main/binary_templates/maplayout.bt)
 
 These files contain 3d coordinates that can be used to spawn objects, npcs, define trigger volumes, etc. They are split into different groups, some of these groups are referenced by name in lua scripts:
 
@@ -199,13 +199,13 @@ Wii U .lua files can be decompiled with this site: https://luadec.metaworm.site/
 
 ## Tables
 ### symbolencountlayouttable.tbl
-`binary_templates/symbolencountlayouttable.bt`
+[binary_templates/symbolencountlayouttable.bt](https://github.com/emilybrooks/tms_level_docs/blob/main/binary_templates/symbolencountlayouttable.bt)
 
 Located in `pack_000_map.cpk/Map`
 Enemy symbols spawn from points that are defined in maplayout.layout. This table includes some data associated with each enemy spawner, and likely an index into another table for what set of enemies to use, but more research is required.
 
 ### gimmicktable.tbl
-`binary_templates/gimmicktable.bt`
+[binary_templates/gimmicktable.bt](https://github.com/emilybrooks/tms_level_docs/blob/main/binary_templates/gimmicktable.bt)
 
 Located in `pack_000_map.cpk/Map`
 Purpose currently unknown.
